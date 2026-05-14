@@ -18,12 +18,12 @@ as possible.
 
 ## Tasks
 
-| Task | Marks | Description |
-|------|-------|-------------|
-| **A** | 5 | Implement an adjacency matrix graph representation |
-| **B** | 7 | Implement a dynamic programming solution to compute infection risk |
-| **C** | 8 | Theoretical and empirical analysis of all algorithm and representation combinations (report only) |
-| **D** | 10 | Implement a antiviral allocation strategy |
+| Task  | Marks | Description                                                                                       |
+| ----- | ----- | ------------------------------------------------------------------------------------------------- |
+| **A** | 5     | Implement an adjacency matrix graph representation                                                |
+| **B** | 7     | Implement a dynamic programming solution to compute infection risk                                |
+| **C** | 8     | Theoretical and empirical analysis of all algorithm and representation combinations (report only) |
+| **D** | 10    | Implement a antiviral allocation strategy                                                         |
 
 ---
 
@@ -37,9 +37,10 @@ public interface as `AdjacencyList` so that all downstream algorithms work corre
 either representation by changing a single config value (`graph_type`).
 
 The matrix stores edge weights in a 2D grid where `matrix[i][j]` holds the transmission
-probability between resident `i` and resident `j`, or `0.0` if no edge exists. 
+probability between resident `i` and resident `j`, or `0.0` if no edge exists.
 
 To test your implementation:
+
 ```bash
 python -m tests.test_adjacency
 ```
@@ -65,6 +66,7 @@ Your function must return the full `(T+1) x |V|` risk table as a `list[list[floa
 Set `risk_solver` to `"task_b"` in the config to run your implementation.
 
 To test your implementation:
+
 ```bash
 python -m tests.test_risk
 ```
@@ -77,6 +79,7 @@ python -m tests.test_risk
 experimental design, and discussion in the report.
 
 You will compare all four combinations of algorithm and representation:
+
 - `monte_carlo` with adjacency list
 - `monte_carlo` with adjacency matrix
 - `task_b` with adjacency list
@@ -103,11 +106,12 @@ Time only the algorithm itself — do not include graph construction or file I/O
 **File to edit:** `treatment/task_d.py` — implement the `task_d` function.
 
 A brute-force baseline is provided in `treatment/vaccination_program.py` for comparison.
-Your task is to implement an efficient solution, selecting the subset of eligible residents 
+Your task is to implement an efficient solution, selecting the subset of eligible residents
 that maximises total benefit (infection risk) without exceeding the total dose capacity.
 
 Your function receives a flat list of eligible `Person` objects (sorted by benefit descending,
 patient zero excluded) and the total dose capacity. It must return:
+
 - A list of vaccinated `Person` objects
 - The total benefit achieved
 - The total doses used
@@ -116,6 +120,7 @@ patient zero excluded) and the total dose capacity. It must return:
 Set `vaccine_strategy` to `"task_d"` in the config to run your implementation.
 
 To test your implementation:
+
 ```bash
 python -m tests.test_treatment
 ```
@@ -163,11 +168,13 @@ matplotlib
 ```
 
 Install with pip:
+
 ```bash
 pip install matplotlib
 ```
 
 Or with conda:
+
 ```bash
 conda install matplotlib
 ```
@@ -188,45 +195,45 @@ python simulate_outbreak.py config.json
 
 All simulation parameters are controlled via a JSON config file. The following keys are required:
 
-| Key | Type | Description |
-|-----|------|-------------|
-| `seed` | `int` | Random seed for reproducibility |
-| `num_residents` | `int` | Number of residents in the city (`> 0`) |
-| `num_edges` | `int` | Exact number of edges to generate — at most `|V|*(|V|-1)/2` |
-| `max_transmission_prob` | `float` | Maximum edge weight — in `[0.0002, 1.0]` |
-| `vulnerability_range` | `[float, float]` | Min and max vulnerability values for residents |
-| `dosage_range` | `[int, int]` | Min and max antiviral dosage requirements for residents |
-| `graph_type` | `str` | Graph representation — `"list"` or `"matrix"` |
-| `risk_solver` | `str` | Risk solver — `"monte_carlo"` or `"task_b"` |
-| `time_horizon` | `int` | Planning horizon T in days (`> 0`) |
-| `simulations` | `int` | Number of Monte Carlo simulations (`> 0`) |
-| `total_doses` | `int` | Total antiviral doses available (`> 0`) |
-| `vaccine_strategy` | `str` | Vaccine allocation strategy — `"brute_force"` or `"task_d"` |
-| `run_vaccine` | `bool` | Whether to run the vaccine program (set `false` for Task C timing) |
-| `print_struct` | `bool` | Print the graph structure to the console |
-| `visualise` | `bool` | Generate and save a visualisation PDF |
-| `visual_filename` | `str` | Filename (without extension) for the saved visualisation |
+| Key                     | Type             | Description                                                        |
+| ----------------------- | ---------------- | ------------------------------------------------------------------ | --- | --- | --- | ------ |
+| `seed`                  | `int`            | Random seed for reproducibility                                    |
+| `num_residents`         | `int`            | Number of residents in the city (`> 0`)                            |
+| `num_edges`             | `int`            | Exact number of edges to generate — at most `                      | V   | \*( | V   | -1)/2` |
+| `max_transmission_prob` | `float`          | Maximum edge weight — in `[0.0002, 1.0]`                           |
+| `vulnerability_range`   | `[float, float]` | Min and max vulnerability values for residents                     |
+| `dosage_range`          | `[int, int]`     | Min and max antiviral dosage requirements for residents            |
+| `graph_type`            | `str`            | Graph representation — `"list"` or `"matrix"`                      |
+| `risk_solver`           | `str`            | Risk solver — `"monte_carlo"` or `"task_b"`                        |
+| `time_horizon`          | `int`            | Planning horizon T in days (`> 0`)                                 |
+| `simulations`           | `int`            | Number of Monte Carlo simulations (`> 0`)                          |
+| `total_doses`           | `int`            | Total antiviral doses available (`> 0`)                            |
+| `vaccine_strategy`      | `str`            | Vaccine allocation strategy — `"brute_force"` or `"task_d"`        |
+| `run_vaccine`           | `bool`           | Whether to run the vaccine program (set `false` for Task C timing) |
+| `print_struct`          | `bool`           | Print the graph structure to the console                           |
+| `visualise`             | `bool`           | Generate and save a visualisation PDF                              |
+| `visual_filename`       | `str`            | Filename (without extension) for the saved visualisation           |
 
 ### Example Config
 
 ```json
 {
-    "seed": 42,
-    "num_residents": 15,
-    "num_edges": 30,
-    "max_transmission_prob": 1.0,
-    "vulnerability_range": [0.1, 1.0],
-    "dosage_range": [1, 5],
-    "graph_type": "list",
-    "risk_solver": "monte_carlo",
-    "time_horizon": 30,
-    "simulations": 100,
-    "total_doses": 20,
-    "vaccine_strategy": "brute_force",
-    "run_vaccine": true,
-    "print_struct": false,
-    "visualise": true,
-    "visual_filename": "outbreak_visual"
+  "seed": 42,
+  "num_residents": 15,
+  "num_edges": 30,
+  "max_transmission_prob": 1.0,
+  "vulnerability_range": [0.1, 1.0],
+  "dosage_range": [1, 5],
+  "graph_type": "list",
+  "risk_solver": "monte_carlo",
+  "time_horizon": 30,
+  "simulations": 100,
+  "total_doses": 20,
+  "vaccine_strategy": "brute_force",
+  "run_vaccine": true,
+  "print_struct": false,
+  "visualise": true,
+  "visual_filename": "outbreak_visual"
 }
 ```
 
@@ -266,11 +273,11 @@ as their benefit value in the vaccine allocation program.
 If `visualise` is set to `true`, a PDF is saved to the `visuals/` folder. The layout
 adapts based on what has been computed:
 
-| Row | Left panel | Right panel |
-|-----|-----------|-------------|
-| 1 | Contact network | Graph representation (list or matrix) |
-| 2 | Infection risk network | Full risk table r_{i,t} heatmap |
-| 3 | Contact network after vaccination | Vaccination program summary |
+| Row | Left panel                        | Right panel                           |
+| --- | --------------------------------- | ------------------------------------- |
+| 1   | Contact network                   | Graph representation (list or matrix) |
+| 2   | Infection risk network            | Full risk table r\_{i,t} heatmap      |
+| 3   | Contact network after vaccination | Vaccination program summary           |
 
 Row 2 appears after the risk solver runs. Row 3 appears after the vaccine program runs.
 
@@ -285,7 +292,6 @@ The following is an example visualisation produced by the simulation with 12 res
 
 ## Academic Integrity
 
-This is an individual assignment. Do not share your code or copy from others.
 Only edit the files explicitly marked with `# EDIT THIS FILE TO IMPLEMENT TASK X`.
 Any changes outside these marked files may cause your submission to fail automated tests.
 
